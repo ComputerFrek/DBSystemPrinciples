@@ -124,7 +124,7 @@ class BPlusTree {
 
         // Same logic as above, keep a temp list of keys and pointers to insert into the split nodes.
         // Now, we have one extra pointer to keep track of (new child's pointer).
-        float tempKeyList[maxKeys + 1];
+        int tempKeyList[maxKeys + 1];
         Address tempPointerList[maxKeys + 2];
 
         // Copy all keys into a temp key list.
