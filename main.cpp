@@ -94,7 +94,7 @@ int main() {
         record.avgRating = stod(inputtoken[1]);
         record.numVotes = stoi(inputtoken[2]);
 
-        if(inputtoken[0].compare("tt0003838") == 0){
+        if(inputtoken[0].compare("tt0003839") == 0){
             cout << "Test" << endl;
         }
 

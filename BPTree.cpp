@@ -1106,7 +1106,7 @@ class BPlusTree {
             root = newRoot;
           }
           // If we are not at the root, we need to insert a new parent in the middle levels of the tree.
-          else
+          else //here
           {
             insertInternal(newLeaf->keys[0], (BPNode *)parentDiskAddress, (BPNode *)newLeafAddress.blockAddress);
           }
