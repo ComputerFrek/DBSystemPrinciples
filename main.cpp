@@ -1,7 +1,3 @@
-#include "memory_pool.h"
-#include "b_plus_tree.h"
-#include "types.h"
-
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -10,23 +6,26 @@
 #include <vector>
 #include <unordered_map>
 
+#include "Storage.cpp"
+#include "BPTree.cpp"
+#include "types.h"
+
 using namespace std;
 
-int main()
-{
+int main() {
   int BLOCKSIZE=0;
   std::cout <<"=========================================================================================="<<endl;
   std::cout <<"Select Block size:           "<<endl;
 
-  int choice = 0;
-  while (choice != 1 && choice != 2){
+  //int choice = 0;
+  /*while (choice != 1 && choice != 2){
     std::cout << "Enter a choice: " <<endl;
-    std::cout << "1. 100 B " <<endl;
+    std::cout << "1. 200 B " <<endl;
     std::cout << "2. 500 B" <<endl;
     cin >> choice;
     if (int(choice) == 1)
     {
-      BLOCKSIZE = int(100);
+      BLOCKSIZE = int(200);
     } 
     else if (int(choice) == 2)
     {
@@ -37,15 +36,14 @@ int main()
       cin.clear();
       std::cout << "Invalid input, input either 1 or 2" <<endl;
     }
-  }
-
+  }*/
+  BLOCKSIZE = 200;
 
   // create the stream redirection stuff 
   streambuf *coutbuf = std::cout.rdbuf(); //save old buffer
 
-
   // save experiment1 logging
-  ofstream out1("experiment1_" + to_string(BLOCKSIZE) + "MB.txt");
+  ofstream out1("experiment1_" + to_string(BLOCKSIZE) + "B.txt");
   std::cout.rdbuf(out1.rdbuf());           //redirect std::cout to filename.txt!
 
   /*
@@ -60,8 +58,8 @@ int main()
   // Create memory pools for the disk and the index, total 500MB
   // The split is determined empirically. We split so that we can have a contiguous disk address space for records
   std::cout << "creating the disk on the stack for records, index" << endl;
-  MemoryPool disk(150000000, BLOCKSIZE);  // 150MB
-  MemoryPool index(350000000, BLOCKSIZE); // 350MB
+  Storage disk(150000000, BLOCKSIZE);  // 150MB
+  Storage index(350000000, BLOCKSIZE); // 350MB
 
   // Creating the tree 
   BPlusTree tree = BPlusTree(BLOCKSIZE, &disk, &index);
@@ -72,7 +70,6 @@ int main()
   index.resetBlocksAccessed();
   std::cout << "Number of record blocks accessed in search operation reset to: 0" << endl;
   std::cout << "Number of index blocks accessed in search operation reset to: 0" << endl;    
-
 
   // Open test data
   std::cout <<"Reading in data ... "<<endl;
@@ -140,10 +137,8 @@ int main()
   - The root node and its child nodes(actual content);
   =============================================================
   */
-
-
   // save experiment2 logging
-  ofstream out2("experiment2_" + to_string(BLOCKSIZE) + "MB.txt");
+  ofstream out2("experiment2_" + to_string(BLOCKSIZE) + "B.txt");
   std::cout.rdbuf(out2.rdbuf());           //redirect std::cout to filename.txt!
 
   // call experiment 2
@@ -175,7 +170,7 @@ int main()
   */
 
   // save experiment3 logging
-  ofstream out3("experiment3_" + to_string(BLOCKSIZE) + "MB.txt");
+  ofstream out3("experiment3_" + to_string(BLOCKSIZE) + "B.txt");
   std::cout.rdbuf(out3.rdbuf());           //redirect std::cout to filename.txt!
 
   // call experiment 3
@@ -265,12 +260,3 @@ int main()
 
   return 0;
 }
-
-
-
-
-
-
-
-
-
